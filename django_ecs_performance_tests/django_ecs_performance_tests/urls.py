@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from world.views import db, dbs, fortunes, json, plaintext, update
+from world.views import db, dbs, fortunes, json, plaintext, update, TextViewAsync, async_json
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,4 +26,6 @@ urlpatterns = [
     path("dbs/", dbs),
     path("fortunes/", fortunes),
     path("update/", update),
+    path("async-json/", async_json),
+    path("async-plaintext/", TextViewAsync.as_view()),
 ]

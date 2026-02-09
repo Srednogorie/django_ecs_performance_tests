@@ -2,13 +2,29 @@ import random
 from functools import partial
 from operator import itemgetter
 
-from django.http import HttpResponse, StreamingHttpResponse
+from django.views import View
+from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
 from orjson import dumps
 
 from world.models import Fortune, World
+import time
+import asyncio
 
 _random_int = partial(random.randint, 1, 10000)
+
+
+class TextViewAsync(View):
+    async def get(self, request):
+        return HttpResponse("Hello, World!", content_type="text/plain")
+
+
+# Ultra-minimal endpoint for baseline testing
+async def async_json(request):
+    await asyncio.sleep(0.5)
+    return HttpResponse(
+        dumps({"message": "Hello, World!"}), content_type="application/json",
+    )
 
 
 def _get_queries(request):
@@ -25,6 +41,7 @@ def plaintext(request):
 
 
 def json(request):
+    time.sleep(0.5)
     return HttpResponse(
         dumps({"message": "Hello, World!"}), content_type="application/json",
     )
