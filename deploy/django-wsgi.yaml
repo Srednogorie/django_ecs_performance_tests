@@ -109,7 +109,7 @@ Resources:
       Port: !Ref ContainerPort
       Protocol: HTTP
       TargetType: ip
-      HealthCheckPath: /version
+      HealthCheckPath: /json
       HealthCheckIntervalSeconds: 10
       HealthyThresholdCount: 2
       UnhealthyThresholdCount: 2
@@ -125,6 +125,12 @@ Resources:
       Actions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
+          
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/ecs/${ServiceName}"
+      RetentionInDays: 1
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -143,6 +149,12 @@ Resources:
           Memory: !Ref ContainerMemory
           PortMappings:
             - ContainerPort: !Ref ContainerPort
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Sub "/ecs/${ServiceName}"
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: "ecs"
           Environment:
             - Name: REGION
               Value: !Ref AWS::Region
@@ -166,6 +178,7 @@ Resources:
       Cluster: !Ref Cluster
       LaunchType: FARGATE
       DesiredCount: !Ref DesiredCount
+      HealthCheckGracePeriodSeconds: 60
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
