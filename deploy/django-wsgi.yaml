@@ -7,7 +7,7 @@ Parameters:
     Default: 'test'
   ServiceName:
     Type: String
-    Default: 'Django WSGI'
+    Default: 'DjangoWSGI'
   Image:
     Type: String
     Default: '042533097213.dkr.ecr.eu-central-1.amazonaws.com/django-wsgi:latest'
@@ -31,7 +31,7 @@ Parameters:
     Default: 1
   ClusterName:
     Type: String
-    Default: 'Django WSGI'
+    Default: 'DjangoWSGI'
   TaskExecutionRoleName:
     Type: String
     Default: 'DjangoWsgiTaskExecRole'
