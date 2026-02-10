@@ -32,6 +32,9 @@ Parameters:
   ClusterName:
     Type: String
     Default: 'Django WSGI'
+  TaskExecutionRoleName:
+    Type: String
+    Default: 'DjangoWsgiTaskExecRole'
   VpcId:
     Type: AWS::EC2::VPC::Id
   PublicSubnets:
@@ -42,7 +45,7 @@ Resources:
   TaskExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub "${ServiceName}-task-exec-role"
+      RoleName: !Ref TaskExecutionRoleName
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
