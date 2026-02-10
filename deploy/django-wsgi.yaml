@@ -66,6 +66,11 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 8000
+          ToPort: 8000
+          DestinationSecurityGroupId: !Ref FargateSecurityGroup
 
   FargateSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -77,6 +82,9 @@ Resources:
           FromPort: !Ref ContainerPort
           ToPort: !Ref ContainerPort
           SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
 
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -110,9 +118,12 @@ Resources:
       Protocol: HTTP
       TargetType: ip
       HealthCheckPath: /json
-      HealthCheckIntervalSeconds: 10
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 10
       HealthyThresholdCount: 2
-      UnhealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      Matcher:
+        HttpCode: 200
 
   ListenerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
