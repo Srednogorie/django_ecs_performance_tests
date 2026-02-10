@@ -121,7 +121,7 @@ Resources:
       Port: !Ref ContainerPort
       Protocol: HTTP
       TargetType: ip
-      HealthCheckPath: /json
+      HealthCheckPath: /json/
       HealthCheckIntervalSeconds: 30
       HealthCheckTimeoutSeconds: 10
       HealthyThresholdCount: 2
