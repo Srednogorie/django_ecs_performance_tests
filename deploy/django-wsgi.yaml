@@ -66,11 +66,15 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-      SecurityGroupEgress:
-        - IpProtocol: tcp
-          FromPort: 8000
-          ToPort: 8000
-          DestinationSecurityGroupId: !Ref FargateSecurityGroup
+
+  LoadBalancerToFargateEgress:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId: !Ref LoadBalancerSecurityGroup
+      IpProtocol: tcp
+      FromPort: 8000
+      ToPort: 8000
+      DestinationSecurityGroupId: !Ref FargateSecurityGroup
 
   FargateSecurityGroup:
     Type: AWS::EC2::SecurityGroup
