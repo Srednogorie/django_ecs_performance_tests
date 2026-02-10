@@ -150,13 +150,20 @@ Resources:
               Value: !Ref ServiceName
             - Name: ENVIRONMENT
               Value: !Ref Environment
+              
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref ClusterName
+      CapacityProviders:
+        - FARGATE
 
   Service:
     Type: AWS::ECS::Service
     DependsOn: ListenerRule
     Properties:
       ServiceName: !Ref ServiceName
-      Cluster: !Ref ClusterName
+      Cluster: !Ref Cluster
       LaunchType: FARGATE
       DesiredCount: !Ref DesiredCount
       DeploymentConfiguration:
