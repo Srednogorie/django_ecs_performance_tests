@@ -7,7 +7,8 @@ on:
         description: 'The name of your application will be used for naming AWS resources'
         required: false
         default: 'django-wsgi'
-
+permissions:
+  id-token: write
 jobs:
   cluster:
     name: Deploy Django WSGI stacks to AWS
