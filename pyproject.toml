@@ -5,7 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "channels[daphne]>=4.3.2",
+    "channels>=4.3.2",
+    "channels-redis>=4.3.0",
     "django>=6.0.1",
     "django-stubs>=5.2.9",
     "django-types>=0.22.0",
@@ -13,5 +14,8 @@ dependencies = [
     "gunicorn[gevent]>=24.1.1",
     "locust>=2.43.1",
     "orjson>=3.11.6",
+    "psycopg2>=2.9.11",
+    "python-dotenv>=1.2.1",
+    "types-channels>=4.3.0.20250822",
     "uvicorn>=0.40.0",
 ]

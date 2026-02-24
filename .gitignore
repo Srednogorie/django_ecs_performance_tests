@@ -11,3 +11,4 @@ wheels/
 
 # Other files
 asgi_vs_wsgi_performance.md
+django_channels_websocket_performance_under_load.md
